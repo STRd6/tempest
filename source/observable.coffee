@@ -1,3 +1,5 @@
+require '../lib/cornerstone'
+
 Observable = (value) ->
   listeners = []
 

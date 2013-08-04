@@ -1,3 +1,5 @@
+require '../lib/cornerstone'
+
 Observable = require "./observable"
 
 # Helper to turn a string into a class name
@@ -8,32 +10,34 @@ Model = (I) ->
   self = Core(I).extend
     attrObservable: (names...) ->
       names.each (name) ->
-        # TODO: Write to I property from observable
-        # something like: Observable.observe(I, name)
-        # to set up a getter/setter
-        # In addition we could listen to writes to I
-        # property as well
         self[name] = Observable(I[name])
+
+        self[name].observe (newValue) ->
+          I[name] = newValue
 
     attrModel: (name, Model) ->
       Model ?= className(name).constantize()
 
       model = Model(I[name])
 
-      # TODO: Setter
-      # TODO: Observable
-      self[name] = ->
-        model
+      self[name] = Observable(model)
+
+      self[name].observe (newValue) ->
+        I[name] = newValue.I
 
     attrModels: (name, Model) ->
       Model ?= className(name).constantize()
 
       models = (I[name] or []).map Model
 
-      # TODO: Setter?
-      # TODO: Observable array of models
-      self[name] = ->
-        models
+      self[name] = Observable(models)
+
+      self[name].observe (newValue) ->
+        I[name] = newValue.map (instance) ->
+          instance.I
+
+    toJSON: ->
+      I
 
   return self
 
