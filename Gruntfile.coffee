@@ -1,28 +1,8 @@
 module.exports = (grunt) ->
 
-  coffeeFiles = {}
-  [
-    "browser"
-    "cli"
-    "compiler"
-    "demo"
-    "gistquire"
-    "grammar_dsl"
-    "haml-jr"
-    "observable"
-    "runtime"
-  ].forEach (name) ->
-    destination = "build/#{name}.js"
-    source = "source/#{name}.coffee"
-    coffeeFiles[destination] = source
-
   # Project configuration.
   grunt.initConfig
     pkg: grunt.file.readJSON('package.json')
-
-    coffee:
-      compile:
-        files: coffeeFiles
 
     uglify:
       web:
@@ -70,11 +50,8 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-contrib-uglify')
   grunt.loadNpmTasks('grunt-shell')
 
-  grunt.registerTask 'test', ['build', 'shell:test']
+  grunt.registerTask 'test', ['shell:test']
   grunt.registerTask 'build', [
-    'shell:lexer'
-    'shell:parser'
-    'coffee'
     'browserify'
     'uglify'
     'shell:demo'
