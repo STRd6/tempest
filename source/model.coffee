@@ -1,4 +1,4 @@
-require '../lib/cornerstone'
+require 'cornerstone-js'
 
 Observable = require "./observable"
 

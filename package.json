@@ -3,5 +3,8 @@
   "version": "0.1.0",
   "devDependencies": {
     "coffee-script": "~1.6.3"
+  },
+  "dependencies": {
+    "cornerstone-js": "~0.1.14"
   }
 }
