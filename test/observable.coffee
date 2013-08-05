@@ -21,3 +21,15 @@ describe 'Observable', ->
       assert.equal newValue, "4life"
 
     observable("4life")
+
+  describe '.lift', ->
+    it 'should treat functions as simple values', ->
+      observable = Observable.lift(-> "yolo")
+
+      assert.equal observable(), "yolo"
+
+    it 'should keep observables unchanged', ->
+      observable = Observable("yolo")
+      lifted = Observable.lift observable
+
+      assert.equal lifted, observable

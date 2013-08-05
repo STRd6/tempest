@@ -65,28 +65,31 @@ Observable = (value) ->
 # matches the observable interface
 Observable.lift = (object) ->
   if typeof object.observe is "function"
-    object
+    return object
+  else if typeof object is "function"
+    # TODO Computed functions with dependencies
+    value = object()
   else
     value = object
 
-    # Return a dummy observable
-    dummy = (newValue) ->
-      if arguments.length > 0
-        value = newValue
-      else
-        value
+  # Return a dummy observable
+  dummy = (newValue) ->
+    if arguments.length > 0
+      value = newValue
+    else
+      value
 
-    # No-op
-    dummy.observe = ->
+  # No-op
+  dummy.observe = ->
 
-    Object.extend dummy,
-      each: (args...) ->
-        if value?
-          [].concat(value).forEach(args...)
-      map: (args...) ->
-        if value?
-          [].concat(value).map(args...)
+  Object.extend dummy,
+    each: (args...) ->
+      if value?
+        [].concat(value).forEach(args...)
+    map: (args...) ->
+      if value?
+        [].concat(value).map(args...)
 
-    return dummy
+  return dummy
 
 module.exports = Observable
