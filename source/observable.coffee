@@ -1,6 +1,8 @@
 require 'cornerstone-js'
 
 Observable = (value) ->
+  return value if typeof value?.observe is "function"
+
   listeners = []
 
   notify = (newValue) ->

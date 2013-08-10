@@ -22,6 +22,11 @@ describe 'Observable', ->
 
     observable("4life")
 
+  it 'should be idempotent', ->
+    o = Observable(5)
+
+    assert.equal o, Observable(o)
+
   describe '.lift', ->
     it 'should treat functions as simple values', ->
       observable = Observable.lift(-> "yolo")

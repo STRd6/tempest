@@ -8,6 +8,7 @@ className = (string) ->
 
 Model = (I) ->
   self = Core(I).extend
+    # Observe any number of attributes as simple observables
     attrObservable: (names...) ->
       names.each (name) ->
         self[name] = Observable(I[name])
@@ -15,6 +16,7 @@ Model = (I) ->
         self[name].observe (newValue) ->
           I[name] = newValue
 
+    # Observe an attribute as a model
     attrModel: (name, Model) ->
       Model ?= className(name).constantize()
 
@@ -25,7 +27,9 @@ Model = (I) ->
       self[name].observe (newValue) ->
         I[name] = newValue.I
 
+    # Observe an attribute as a list of sub-models
     attrModels: (name, Model) ->
+      # TODO: Singularize name
       Model ?= className(name).constantize()
 
       models = (I[name] or []).map Model
@@ -36,6 +40,7 @@ Model = (I) ->
         I[name] = newValue.map (instance) ->
           instance.I
 
+    # Observe all data keys as simple observables
     observeAll: ->
       self.attrObservable Object.keys(I)...
 
