@@ -36,6 +36,9 @@ Model = (I) ->
         I[name] = newValue.map (instance) ->
           instance.I
 
+    observeAll: ->
+      self.attrObservable Object.keys(I)...
+
     toJSON: ->
       I
 

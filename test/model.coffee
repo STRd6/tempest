@@ -154,3 +154,14 @@ describe 'Model', ->
         test: true
 
       assert model.toJSON().test
+
+  describe "#observeAll", ->
+    it "should observe all attributes of a simple model", ->
+      model = Model
+        test: true
+        yolo: "4life"
+
+      model.observeAll()
+
+      assert model.test()
+      assert.equal model.yolo(), "4life"

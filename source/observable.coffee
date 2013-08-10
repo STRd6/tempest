@@ -28,6 +28,8 @@ Observable = (value) ->
       if value?
         [value].each(args...)
 
+    # TODO: Add a delayed/debounced proxy
+
   # If value is array hook into array modification events
   # to keep things up to date
   if Array.isArray(value)

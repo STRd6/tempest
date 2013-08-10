@@ -1,0 +1,5 @@
+TODO
+====
+
+Remove Observable.lift and have it work by just calling Observable itself
+
