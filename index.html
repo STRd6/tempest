@@ -1,1 +1,53 @@
-My GitHub Page
+<html><head><title>HamlJr
+</title><meta charset="utf-8" /><link rel="stylesheet" type="text/css" href="style.css" /><script src="javascripts/lib/coffee-script.js"></script><script src="javascripts/lib/zepto.min.js"></script><script src="//d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js"></script><script src="javascripts/web.js"></script></head><body><h1>Tempest - Alpha
+</h1><p>Create simple interactive HTML components using
+<a href="http://coffeescript.org/">CoffeeScript
+</a>,
+<a href="https://github.com/STRd6/haml-jr">HamlJr
+</a>, and
+<a href="https://github.com/visionmedia/styl">Styl
+</a></p><p>There are still many bugs, but I think this is interesting
+enough to put out into the world for
+<a href="https://github.com/STRd6/haml-jr/issues">feedback
+</a>.
+</p><p>In the data section you return an object that has observable properties.
+In the template these properties are bound to attributes or text.
+As your model is updated the rendered template will always stay up to date.
+The binding is automatic by introspecting the observable properties.
+</p><div id="actions"><button class="auth">Auth
+</button><button class="save">Save
+</button><button class="update">Update
+</button></div><div class="titles"><h2>Data
+</h2><h2>Template
+</h2><h2>Style
+</h2></div><div id="errors"><p></p><p></p><p></p></div><div id="debug"><code></code><code></code><code></code></div><div class="editor-wrapper"><div id="data">tickets: [
+  {name: "None", price: null}
+  {name: "Economy", price: 199.95}
+  {name: "Business", price: 449.22}
+  {name: "First Class", price: 1199.99}
+]
+chosenTicket: Observable()
+resetTicket: -&gt;
+  @chosenTicket(@tickets[0])
+</div></div><div class="editor-wrapper"><div id="template">Choose a ticket class:
+%select
+  - on "change", @chosenTicket
+  - each @tickets, -&gt;
+    %option= @name
+
+%button Clear
+  - on "click", @resetTicket
+
+- with @chosenTicket, -&gt;
+  %p
+    - if @price
+      You have chosen
+      %b= @name
+      %span $#{@price}
+    - else
+      No ticket chosen
+</div></div><div class="editor-wrapper"><div id="style">#preview
+  font-family: helvetica
+  padding: 1em
+</div></div><h2>Preview
+</h2><div id="preview"></div></body></html>
