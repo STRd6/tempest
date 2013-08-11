@@ -1,7 +1,7 @@
 Tempest
 =======
 
-[Demo](strd6.github.io/tempest)
+[Demo](http://strd6.github.io/tempest)
 
 Tempest uses HamlJr with Observable models to provide automagic HTML template data binding.
 
