@@ -1,6 +1,8 @@
 Tempest
 =======
 
+[Demo](strd6.github.io/tempest)
+
 Tempest uses HamlJr with Observable models to provide automagic HTML template data binding.
 
 HamlJr is similar to haml-coffee. They both use CoffeeScript for the scripting language,
