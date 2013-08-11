@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd gh-pages
+git ci -am "Pages build"
+git push

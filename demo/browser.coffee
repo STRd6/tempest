@@ -5,7 +5,7 @@ styl = require('styl')
 # We depend on cornerstone, but let tempest require it so as not to
 # double up
 TextEditor = require('./text_editor')
-Tempest = require('tempest-js')
+Tempest = require('./tempest')
 Object.extend window, Tempest
 
 window.HAMLjr = HAMLjr

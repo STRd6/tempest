@@ -1,11 +1,17 @@
 #!/bin/bash
 set -e
 
-rm -r gh-pages/*
-mkdir -p gh-pages/javascripts
+BUILD=gh-pages
 
-cp -r lib gh-pages/javascripts/
-cp build/*.js gh-pages/javascripts
+rm -r $BUILD/*
+mkdir -p $BUILD/javascripts
 
-node_modules/.bin/haml-jr < demo/index.haml > gh-pages/index.html
-node_modules/.bin/styl -w < style.styl > gh-pages/style.css
+cp -r lib $BUILD/javascripts/
+cp dist/*.js $BUILD/javascripts
+
+node_modules/.bin/coffee -co $BUILD/javascripts demo/*.coffee
+
+node_modules/.bin/browserify $BUILD/javascripts/browser.js -i coffee-script > $BUILD/javascripts/web.js
+
+node_modules/.bin/haml-jr < demo/index.haml > $BUILD/index.html
+node_modules/.bin/styl -w < demo/style.styl > $BUILD/style.css
