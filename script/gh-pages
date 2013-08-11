@@ -1,5 +1,7 @@
 #!/bin/bash
+set -e
 
 cd gh-pages
+git add .
 git ci -am "Pages build"
 git push
