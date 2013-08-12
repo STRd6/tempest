@@ -22,7 +22,8 @@
     "dist"
   ],
   "scripts": {
-    "prepublish": "script/prepublish"
+    "prepublish": "script/prepublish",
+    "test": "script/test"
   },
   "main": "dist/tempest.js"
 }
