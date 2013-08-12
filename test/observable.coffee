@@ -26,15 +26,3 @@ describe 'Observable', ->
     o = Observable(5)
 
     assert.equal o, Observable(o)
-
-  describe '.lift', ->
-    it 'should treat functions as simple values', ->
-      observable = Observable.lift(-> "yolo")
-
-      assert.equal observable(), "yolo"
-
-    it 'should keep observables unchanged', ->
-      observable = Observable("yolo")
-      lifted = Observable.lift observable
-
-      assert.equal lifted, observable
