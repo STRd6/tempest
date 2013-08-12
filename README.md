@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/STRd6/tempest.png?branch=master)](https://travis-ci.org/STRd6/tempest)
+
 Tempest
 =======
 
