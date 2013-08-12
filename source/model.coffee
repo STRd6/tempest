@@ -1,4 +1,4 @@
-require 'cornerstone-js'
+require 'athletic-support'
 
 Observable = require "./observable"
 

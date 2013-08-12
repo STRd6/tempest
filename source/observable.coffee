@@ -1,4 +1,4 @@
-require 'cornerstone-js'
+require 'athletic-support'
 
 Observable = (value) ->
   return value if typeof value?.observe is "function"
