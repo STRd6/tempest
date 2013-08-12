@@ -12,7 +12,7 @@
     "docco": "~0.6.2"
   },
   "dependencies": {
-    "cornerstone-js": "~0.2.0",
+    "athletic-support": "~0.1.0",
     "haml-jr": "~0.1.0"
   },
   "repository": {
