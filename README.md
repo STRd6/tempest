@@ -35,3 +35,15 @@ an object that has observable properties.
 A simple data object can be automatically made into an observable model:
 
     observableModel = Model(data).observeAll()
+
+Setup
+=====
+
+[Clone](https://help.github.com/articles/fork-a-repo) repository
+
+In the tempest folder run
+
+	npm install
+	script/demo
+
+Open index.html in the gh-pages directory in your browser.
