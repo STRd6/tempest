@@ -46,4 +46,8 @@ In the tempest folder run
 	npm install
 	script/demo
 
-Open index.html in the gh-pages directory in your browser.
+in the directory gh-pages run
+	
+	nserver
+
+go to localhost:8000 in your browser
