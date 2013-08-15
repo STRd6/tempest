@@ -1,8 +1,6 @@
 Observable
 ==========
 
-    require 'athletic-support'
-
 Observable constructor.
 
     Observable = (value) ->
@@ -18,7 +16,7 @@ Maintain a set of listeners to observe changes.
 Helper to notify each observer of changes.
 
       notify = (newValue) ->
-        listeners.each (listener) ->
+        listeners.forEach (listener) ->
           listener(newValue)
 
 Our observable function, stored as a reference to self.
@@ -44,7 +42,7 @@ TODO: If value is a function compute dependencies and listen to observables that
 
 Methods that all observables share.
 
-      Object.extend self,
+      extend self,
 
 Add a listener for when this object changes.
 
@@ -55,7 +53,7 @@ This `each` iterator is similar to [the Maybe monad](http://en.wikipedia.org/wik
 
         each: (args...) ->
           if value?
-            [value].each(args...)
+            [value].forEach(args...)
 
 TODO: Add a delayed/debounced proxy
 
@@ -64,7 +62,7 @@ If value is array hook into array modification events to keep things up to date.
       if Array.isArray(value)
         Object.extend self,
           each: (args...) ->
-            value.each(args...)
+            value.forEach(args...)
 
           map: (args...) ->
             value.map(args...)
@@ -95,3 +93,15 @@ If value is array hook into array modification events to keep things up to date.
 Export `Observable`
 
     module.exports = Observable
+
+Appendix
+--------
+
+The extend method adds one objects properties to another.
+
+    extend = (target, sources...) ->
+      for source in sources
+        for name of source
+          target[name] = source[name]
+
+      return target

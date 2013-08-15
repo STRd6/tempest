@@ -26,3 +26,23 @@ describe 'Observable', ->
     o = Observable(5)
 
     assert.equal o, Observable(o)
+
+  describe "#each", ->
+    it "should be invoked once if there is an observable", ->
+      o = Observable(5)
+      called = 0
+
+      o.each (value) ->
+        called += 1
+        assert.equal value, 5
+
+      assert.equal called, 1
+
+    it "should not be invoked if observable is null", ->
+      o = Observable(null)
+      called = 0
+
+      o.each (value) ->
+        called += 1
+
+      assert.equal called, 0
