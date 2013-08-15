@@ -1,9 +1,11 @@
 #!/bin/bash
-set -e
+set +e
 
 BUILD=gh-pages
 
 rm -r $BUILD/*
+
+set -e
 mkdir -p $BUILD/javascripts
 
 cp -r lib $BUILD/javascripts/
