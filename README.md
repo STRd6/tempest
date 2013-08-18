@@ -35,3 +35,17 @@ an object that has observable properties.
 A simple data object can be automatically made into an observable model:
 
     observableModel = Model(data).observeAll()
+
+Setup
+=====
+
+In the tempest folder run
+
+	npm install
+	script/demo
+
+in the directory gh-pages run
+	
+	nserver
+
+go to localhost:8000 in your browser
