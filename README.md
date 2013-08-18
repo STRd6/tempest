@@ -39,8 +39,6 @@ A simple data object can be automatically made into an observable model:
 Setup
 =====
 
-[Clone](https://help.github.com/articles/fork-a-repo) repository
-
 In the tempest folder run
 
 	npm install
