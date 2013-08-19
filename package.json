@@ -1,6 +1,6 @@
 {
   "name": "tempest-js",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Templating that doesn't blow.",
   "devDependencies": {
     "coffee-script": "~1.6.3",
@@ -8,12 +8,12 @@
     "uglify-js": "~2.3.6",
     "styl": "~0.2.3",
     "browserify": "~2.26.0",
-    "haml-jr-cli": "~0.1.1",
+    "haml-jr-cli": "~0.1.4",
     "docco": "~0.6.2"
   },
   "dependencies": {
     "athletic-support": "~0.1.0",
-    "haml-jr": "~0.1.0"
+    "haml-jr": "~0.2.1"
   },
   "repository": {
     "type": "git",
