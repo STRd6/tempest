@@ -15,7 +15,7 @@ module.exports =
     if code = window.location.href.match(/\?code=(.*)/)?[1]
       $.getJSON "https://hamljr-auth.herokuapp.com/authenticate/#{code}", (data) =>
         if token = data.token
-          @authToken = token
+          @accessToken = token
           localStorage.authToken = token
 
     if localStorage.authToken
@@ -31,7 +31,7 @@ module.exports =
       url: url
       type: "PATCH"
       dataType: 'json'
-      data: data
+      data: JSON.stringify(data)
       success: callback
 
   create: (data, callback) ->
@@ -44,7 +44,7 @@ module.exports =
       url: url
       type: "POST"
       dataType: 'json'
-      data: data
+      data: JSON.stringify(data)
       success: callback
 
   get: (id, callback) ->

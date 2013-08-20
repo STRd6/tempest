@@ -61,16 +61,14 @@ postData = ->
   [data, template, style] = editors.map (editor) ->
     editor.text()
 
-  JSON.stringify(
-    public: true
-    files:
-      data:
-        content: data
-      template:
-        content: template
-      style:
-        content: style
-  )
+  public: true
+  files:
+    data:
+      content: data
+    template:
+      content: template
+    style:
+      content: style
 
 # TODO: Remote sample repos
 save = ->

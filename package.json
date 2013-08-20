@@ -8,12 +8,12 @@
     "uglify-js": "~2.3.6",
     "styl": "~0.2.3",
     "browserify": "~2.26.0",
-    "haml-jr-cli": "~0.1.4",
+    "haml-jr-cli": "~0.2.0",
     "docco": "~0.6.2"
   },
   "dependencies": {
     "athletic-support": "~0.1.0",
-    "haml-jr": "~0.2.1"
+    "haml-jr": "~0.2.3"
   },
   "repository": {
     "type": "git",
