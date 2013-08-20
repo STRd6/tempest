@@ -59,6 +59,6 @@ module.exports =
     file ?= "build.js"
 
     @get id, (data) ->
-      Function(data.files[file])()
+      Function(data.files[file].content)()
 
       callback()

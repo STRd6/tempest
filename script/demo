@@ -14,6 +14,7 @@ cp dist/*.js $BUILD/javascripts
 node_modules/.bin/coffee -co $BUILD/javascripts demo/*.coffee
 
 node_modules/.bin/browserify $BUILD/javascripts/browser.js -i coffee-script > $BUILD/javascripts/web.js
+node_modules/.bin/browserify $BUILD/javascripts/loader.js -i coffee-script > $BUILD/javascripts/loaderweb.js
 
 node_modules/.bin/haml-jr < demo/index.haml > $BUILD/index.html
 node_modules/.bin/styl -w < demo/style.styl > $BUILD/style.css
