@@ -31,6 +31,8 @@ Observe any number of attributes as simple observables. For each attribute name 
             self[name].observe (newValue) ->
               I[name] = newValue
 
+          return self
+
 Observe an attribute as a model. Treats the attribute given as an Observable model instance exposting a getter/setter method of the same name. The class name is infered from the property name or a class can be passed in explicitly.
 
         attrModel: (name, Model) ->
@@ -42,6 +44,8 @@ Observe an attribute as a model. Treats the attribute given as an Observable mod
 
           self[name].observe (newValue) ->
             I[name] = newValue.I
+
+          return self
 
 Observe an attribute as a list of sub-models. This is the same as `attrModel` except the attribute is expected to be an array of models rather than a single one.
 
@@ -55,6 +59,8 @@ Observe an attribute as a list of sub-models. This is the same as `attrModel` ex
           self[name].observe (newValue) ->
             I[name] = newValue.map (instance) ->
               instance.I
+
+          return self
 
 A method to create simple observables for all properties.
 
