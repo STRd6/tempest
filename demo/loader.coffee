@@ -3,6 +3,8 @@
 Tempest = require('./tempest')
 Object.extend window, Tempest
 
+window.styl = require('styl')
+
 window.HAMLjr = HAMLjr
 window.parser = parser
 
@@ -17,6 +19,12 @@ Gistquire.get gistId, (data) ->
   # Caching our result so we can use the source in our running context
   Gistquire.Gists ||= {}
   Gistquire.Gists[gistId] = data
+
+  # Apply the styles
+  if styleContent = data.files["style.css"]?.content
+    $('head').append $("<style>",
+      html: styleContent
+    )
 
   # Executing the entry point
   entryPoint = "build.js"
