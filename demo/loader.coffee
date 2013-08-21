@@ -16,18 +16,11 @@ gistId = window.location.href.match(/\?gistId=(.*)/)?[1] or 6286182
 Gistquire.get gistId, (data) ->
   console.log data
 
-  # Caching our result so we can use the source in our running context
-  Gistquire.Gists ||= {}
-  Gistquire.Gists[gistId] = data
-
-  # Apply the styles
-  if styleContent = data.files["style.css"]?.content
-    $('head').append $("<style>",
-      html: styleContent
-    )
-
   # Executing the entry point
   entryPoint = "build.js"
   program = data.files[entryPoint].content
-  # TODO: Could pass in context and settings here
-  Function("gistId", program)(gistId)
+  # Pass in context and settings here
+  Function("ENV", program)(
+    gist: data
+    $root: $('body')
+  )
