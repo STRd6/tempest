@@ -55,6 +55,14 @@ module.exports =
 
     $.getJSON "https://api.github.com/gists/#{id}", data, callback
 
+  api: (path, callback) ->
+    if @accessToken
+      data = access_token: @accessToken
+    else
+      data = {}
+
+    $.getJSON "https://api.github.com/#{path}", data, callback
+
   load: (id, {file, callback}) ->
     file ?= "build.js"
 

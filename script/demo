@@ -17,4 +17,3 @@ node_modules/.bin/browserify $BUILD/javascripts/browser.js -i coffee-script > $B
 node_modules/.bin/browserify $BUILD/javascripts/loader.js -i coffee-script > $BUILD/javascripts/loaderweb.js
 
 node_modules/.bin/haml-jr -H < demo/index.haml > $BUILD/index.html
-node_modules/.bin/styl -w < demo/style.styl > $BUILD/style.css
