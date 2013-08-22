@@ -76,7 +76,7 @@
     _ref1 = editors.map(function(editor) {
       return editor.text();
     }), data = _ref1[0], template = _ref1[1], style = _ref1[2];
-    return JSON.stringify({
+    return {
       "public": true,
       files: {
         data: {
@@ -89,7 +89,7 @@
           content: style
         }
       }
-    });
+    };
   };
 
   save = function() {

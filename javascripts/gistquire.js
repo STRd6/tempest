@@ -14,7 +14,7 @@
         $.getJSON("https://hamljr-auth.herokuapp.com/authenticate/" + code, function(data) {
           var token;
           if (token = data.token) {
-            _this.authToken = token;
+            _this.accessToken = token;
             return localStorage.authToken = token;
           }
         });
@@ -33,7 +33,7 @@
         url: url,
         type: "PATCH",
         dataType: 'json',
-        data: data,
+        data: JSON.stringify(data),
         success: callback
       });
     },
@@ -47,7 +47,7 @@
         url: url,
         type: "POST",
         dataType: 'json',
-        data: data,
+        data: JSON.stringify(data),
         success: callback
       });
     },
@@ -62,6 +62,17 @@
       }
       return $.getJSON("https://api.github.com/gists/" + id, data, callback);
     },
+    api: function(path, callback) {
+      var data;
+      if (this.accessToken) {
+        data = {
+          access_token: this.accessToken
+        };
+      } else {
+        data = {};
+      }
+      return $.getJSON("https://api.github.com/" + path, data, callback);
+    },
     load: function(id, _arg) {
       var callback, file;
       file = _arg.file, callback = _arg.callback;
@@ -69,7 +80,7 @@
         file = "build.js";
       }
       return this.get(id, function(data) {
-        Function(data.files[file])();
+        Function(data.files[file].content)();
         return callback();
       });
     }
