@@ -62,11 +62,3 @@ module.exports =
       data = {}
 
     $.getJSON "https://api.github.com/#{path}", data, callback
-
-  load: (id, {file, callback}) ->
-    file ?= "build.js"
-
-    @get id, (data) ->
-      Function(data.files[file].content)()
-
-      callback()

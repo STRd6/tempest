@@ -13,7 +13,7 @@ Gistquire.onload() # Init access token stuff
 
 gistId = window.location.href.match(/\?gistId=(.*)/)?[1] or 6286182
 
-Gistquire.get gistId, (data) ->
+Gistquire.get gistId, (data, status, request) ->
   console.log data
 
   # Executing the entry point
@@ -23,4 +23,5 @@ Gistquire.get gistId, (data) ->
   Function("ENV", program)(
     gist: data
     $root: $('body')
+    request: request
   )
