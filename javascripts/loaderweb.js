@@ -73,17 +73,6 @@
         data = {};
       }
       return $.getJSON("https://api.github.com/" + path, data, callback);
-    },
-    load: function(id, _arg) {
-      var callback, file;
-      file = _arg.file, callback = _arg.callback;
-      if (file == null) {
-        file = "build.js";
-      }
-      return this.get(id, function(data) {
-        Function(data.files[file].content)();
-        return callback();
-      });
     }
   };
 
@@ -112,14 +101,15 @@
 
   gistId = ((_ref1 = window.location.href.match(/\?gistId=(.*)/)) != null ? _ref1[1] : void 0) || 6286182;
 
-  Gistquire.get(gistId, function(data) {
+  Gistquire.get(gistId, function(data, status, request) {
     var entryPoint, program;
     console.log(data);
     entryPoint = "build.js";
     program = data.files[entryPoint].content;
     return Function("ENV", program)({
       gist: data,
-      $root: $('body')
+      $root: $('body'),
+      request: request
     });
   });
 

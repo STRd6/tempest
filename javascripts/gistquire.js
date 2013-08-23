@@ -72,17 +72,6 @@
         data = {};
       }
       return $.getJSON("https://api.github.com/" + path, data, callback);
-    },
-    load: function(id, _arg) {
-      var callback, file;
-      file = _arg.file, callback = _arg.callback;
-      if (file == null) {
-        file = "build.js";
-      }
-      return this.get(id, function(data) {
-        Function(data.files[file].content)();
-        return callback();
-      });
     }
   };
 
