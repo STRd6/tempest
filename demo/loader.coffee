@@ -1,14 +1,3 @@
-{parser, compile, util} = HAMLjr = require('haml-jr')
-
-Tempest = require('./tempest')
-Object.extend window, Tempest
-
-window.styl = require('styl')
-
-window.HAMLjr = HAMLjr
-window.parser = parser
-
-window.Gistquire = require './gistquire'
 Gistquire.onload() # Init access token stuff
 
 gistId = window.location.href.match(/\?gistId=(.*)/)?[1] or 6286182
