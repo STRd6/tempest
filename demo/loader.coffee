@@ -1,6 +1,6 @@
 Gistquire.onload() # Init access token stuff
 
-gistId = window.location.href.match(/\?gistId=(.*)/)?[1] or 6286182
+gistId = window.location.href.match(/gistId=(\d+)/)?[1] or 6286182
 
 Gistquire.get gistId, (data, status, request) ->
   console.log data
