@@ -4,7 +4,7 @@
 
   Gistquire.onload();
 
-  gistId = ((_ref = window.location.href.match(/\?gistId=(d+)/)) != null ? _ref[1] : void 0) || 6286182;
+  gistId = ((_ref = window.location.href.match(/gistId=(\d+)/)) != null ? _ref[1] : void 0) || 6286182;
 
   Gistquire.get(gistId, function(data, status, request) {
     var entryPoint, program;
