@@ -1,8 +1,6 @@
-Gistquire.onload() # Init access token stuff
-
 gistId = window.location.href.match(/gistId=(\d+)/)?[1] or 6286182
 
-Gistquire.get gistId, (data, status, request) ->
+$.getJSON "https://api.github.com/gists/#{gistId}", (data, status, request) ->
   console.log data
 
   # Executing the entry point

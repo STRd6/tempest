@@ -7,5 +7,3 @@ window.styl = require('styl')
 
 window.HAMLjr = HAMLjr
 window.parser = parser
-
-window.Gistquire = require './gistquire'
