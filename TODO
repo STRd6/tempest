@@ -1,5 +1,7 @@
 TODO
 ====
 
-Remove Observable.lift and have it work by just calling Observable itself
+In Editor
+---------
 
+Don't create css file if no styl files
