@@ -14,6 +14,4 @@
 
   window.parser = parser;
 
-  window.Gistquire = require('./gistquire');
-
 }).call(this);

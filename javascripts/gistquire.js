@@ -23,8 +23,9 @@
         return this.accessToken = localStorage.authToken;
       }
     },
-    update: function(id, data, callback) {
-      var url;
+    update: function(id, _arg) {
+      var data, error, success, url;
+      data = _arg.data, success = _arg.success, error = _arg.error;
       url = "https://api.github.com/gists/" + id;
       if (this.accessToken) {
         url += "?access_token=" + this.accessToken;
@@ -34,7 +35,8 @@
         type: "PATCH",
         dataType: 'json',
         data: JSON.stringify(data),
-        success: callback
+        success: success,
+        error: error
       });
     },
     create: function(data, callback) {
