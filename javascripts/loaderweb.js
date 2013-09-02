@@ -7,13 +7,10 @@
 
   $.getJSON("https://api.github.com/gists/" + gistId, function(data, status, request) {
     var entryPoint, program;
-    console.log(data);
     entryPoint = "build.js";
     program = data.files[entryPoint].content;
     return Function("ENV", program)({
-      gist: data,
-      $root: $('body'),
-      request: request
+      files: data.files
     });
   });
 
