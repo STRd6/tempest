@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "athletic-support": "~0.1.0",
-    "haml-jr": "~0.2.8"
+    "haml-jr": "~0.2.9"
   },
   "repository": {
     "type": "git",
