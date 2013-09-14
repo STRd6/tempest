@@ -64,11 +64,7 @@ module.exports={
   "readme": "[![Build Status](https://travis-ci.org/STRd6/inflecta.png?branch=master)](https://travis-ci.org/STRd6/inflecta)\n\nInflecta\n========\n\nWhat? Another ActiveSupport::Inflector port? Yeah, sorry.\n\nThe primary difference between **inflecta** and other ports is that **inflecta** translates the Ruby idioms to JavaScript idioms. It goes all the way.\n\nThe most important method is `constantize` which is not even attempted in most ports. In fact, the only reason we really need to pluralize or singularize things is so that we can automatically determine the class to instantiate from the name of the data key. That is the whole point of `ActiveSupport::Inflector`, `humanize` is just a nice side effect.\n\nIn Ruby the scope resolution operator is `::`. JavaScript doesn't have any such thing, instead people generally namespace classes using a module pattern like `MyApp.Models.MyModel`. For that reason **inflecta** uses `.` rather than blindly copying the Ruby scope resolution operator.\n\nIn JavaScript variables and properties are usually named with camel case. In Ruby they are named with underscores. It generally doesn't make a big difference, but if we want to implement `humanize` then it better work with our default conventions.\n\nReal sorry about the name, but inflector was taken on npm.\n",
   "readmeFilename": "README.md",
   "_id": "inflecta@0.8.2",
-  "dist": {
-    "shasum": "dc8d9f2560bff2774f731746c40b18d07ac387cd"
-  },
-  "_from": "inflecta@~0.8.2",
-  "_resolved": "https://registry.npmjs.org/inflecta/-/inflecta-0.8.2.tgz"
+  "_from": "inflecta@~0.8.2"
 }
 
 },{}],10:[function(require,module,exports){
@@ -4715,7 +4711,7 @@ process.chdir = function (dir) {
 };
 
 },{}],17:[function(require,module,exports){
-var process=require("__browserify_process");!function(){var CoffeeScript,indentText,keywords,keywordsRegex,util,__slice=[].slice;CoffeeScript=require("coffee-script");indentText=function(text,indent){if(indent==null){indent="  "}return indent+text.replace(/\n/g,"\n"+indent)};keywords=["on","each","with","render"];keywordsRegex=RegExp("^\\s*("+keywords.join("|")+")\\s+");util={indent:indentText,filters:{verbatim:function(content,compiler){return compiler.buffer('"""'+content.replace(/(#)/,"\\$1")+'"""')},plain:function(content,compiler){return compiler.buffer(JSON.stringify(content))},coffeescript:function(content,compiler){return[content]},javascript:function(content,compiler){return["`",compiler.indent(content),"`"]}},styleTag:function(content){return this.element("style",[],["__element.innerHTML = "+JSON.stringify("\n"+this.indent(content))])},scriptTag:function(content){return this.element("script",[],["__element.innerHTML = "+JSON.stringify("\n"+this.indent(content))])},element:function(tag,attributes,contents){var attributeLines,lines;if(contents==null){contents=[]}attributeLines=attributes.map(function(_arg){var name,value;name=_arg.name,value=_arg.value;name=JSON.stringify(name);return"__attribute __element, "+name+", "+value});return lines=["__element = document.createElement("+JSON.stringify(tag)+")","__push(__element)"].concat(__slice.call(attributeLines),__slice.call(contents),["__pop()"])},buffer:function(value){return["__element = document.createTextNode('')","__text(__element, "+value+")","__push __element","__pop()"]},stringJoin:function(values){var dynamic;dynamic=this.dynamic;values=values.map(function(value){if(value.indexOf('"')===0){return JSON.parse(value)}else{return dynamic(value)}});return JSON.stringify(values.join(" "))},dynamic:function(value){return"#{"+value+"}"},attributes:function(node){var attributeId,attributes,classes,dynamic,id;dynamic=this.dynamic;id=node.id,classes=node.classes,attributes=node.attributes;classes=(classes||[]).map(JSON.stringify);attributeId=void 0;if(attributes){attributes=attributes.filter(function(_arg){var name,value;name=_arg.name,value=_arg.value;if(name==="class"){classes.push(value);return false}else if(name==="id"){attributeId=value;return false}else{return true}})}else{attributes=[]}if(classes.length){attributes.unshift({name:"class",value:this.stringJoin(classes)})}if(attributeId){attributes.unshift({name:"id",value:attributeId})}else if(id){attributes.unshift({name:"id",value:JSON.stringify(id)})}return attributes},render:function(node){var filter,tag,text;tag=node.tag,filter=node.filter,text=node.text;if(tag){return this.tag(node)}else if(filter){return this.filter(node)}else{return this.contents(node)}},replaceKeywords:function(codeString){return codeString.replace(keywordsRegex,"__$1 ")},filter:function(node){var filter,filterName;filterName=node.filter;if(filter=this.filters[filterName]){return[].concat.apply([],this.filters[filterName](node.content,this))}else{return["__filter("+JSON.stringify(filterName)+", "+JSON.stringify(node.content)+")"]}},contents:function(node){var bufferedCode,childContent,children,code,contents,indent,text,unbufferedCode;children=node.children,bufferedCode=node.bufferedCode,unbufferedCode=node.unbufferedCode,text=node.text;if(unbufferedCode){indent=true;code=this.replaceKeywords(unbufferedCode);contents=[code]}else if(bufferedCode){contents=this.buffer(bufferedCode)}else if(text){contents=this.buffer(JSON.stringify(text))}else if(node.tag){contents=[]}else if(node.comment){return[]}else{contents=[];console.warn("No content for node:",node)}if(children){childContent=this.renderNodes(children);if(indent){childContent=this.indent(childContent.join("\n"))}contents=contents.concat(childContent)}return contents},renderNodes:function(nodes){return[].concat.apply([],nodes.map(this.render,this))},tag:function(node){var attributes,contents,tag;tag=node.tag;attributes=this.attributes(node);contents=this.contents(node);return this.element(tag,attributes,contents)}};exports.util=util;exports.compile=function(parseTree,_arg){var compiler,error,items,name,options,program,programSource,source,_ref;_ref=_arg!=null?_arg:{},name=_ref.name,compiler=_ref.compiler;if(compiler){CoffeeScript=compiler}items=util.renderNodes(parseTree);source="(data) ->\n  (->\n    {\n      __push\n      __pop\n      __attribute\n      __filter\n      __text\n      __on\n      __each\n      __with\n      __render\n    } = HAMLjr.Runtime(this)\n\n    __push document.createDocumentFragment()\n"+util.indent(items.join("\n"),"    ")+"\n    __pop()\n  ).call(data)";if(name){options={};programSource="@HAMLjr ||= {}\n@HAMLjr.templates ||= {}\n@HAMLjr.templates["+JSON.stringify(name)+"] = "+source}else{options={bare:true};programSource=source}try{program=CoffeeScript.compile(programSource,options);return program}catch(_error){error=_error;process.stderr.write("COMPILE ERROR:\n  SOURCE:\n "+programSource+"\n");throw error}}}.call(this);
+var process=require("__browserify_process");!function(){var CoffeeScript,indentText,keywords,keywordsRegex,util,__slice=[].slice;CoffeeScript=require("coffee-script");indentText=function(text,indent){if(indent==null){indent="  "}return indent+text.replace(/\n/g,"\n"+indent)};keywords=["on","each","with","render"];keywordsRegex=RegExp("^\\s*("+keywords.join("|")+")\\s+");util={indent:indentText,filters:{verbatim:function(content,compiler){return compiler.buffer('"""'+content.replace(/(#)/,"\\$1")+'"""')},plain:function(content,compiler){return compiler.buffer(JSON.stringify(content))},coffeescript:function(content,compiler){return[content]},javascript:function(content,compiler){return["`",compiler.indent(content),"`"]}},styleTag:function(content){return this.element("style",[],["__element.innerHTML = "+JSON.stringify("\n"+this.indent(content))])},scriptTag:function(content){return this.element("script",[],["__element.innerHTML = "+JSON.stringify("\n"+this.indent(content))])},element:function(tag,attributes,contents){var attributeLines,lines;if(contents==null){contents=[]}attributeLines=attributes.map(function(_arg){var name,value;name=_arg.name,value=_arg.value;name=JSON.stringify(name);return"__attribute __element, "+name+", "+value});return lines=["__element = document.createElement("+JSON.stringify(tag)+")","__push(__element)"].concat(__slice.call(attributeLines),__slice.call(contents),["__pop()"])},buffer:function(value){return["__element = document.createTextNode('')","__text(__element, "+value+")","__push __element","__pop()"]},stringJoin:function(values){var dynamic;dynamic=this.dynamic;values=values.map(function(value){if(value.indexOf('"')===0){return JSON.parse(value)}else{return dynamic(value)}});return JSON.stringify(values.join(" "))},dynamic:function(value){return"#{"+value+"}"},attributes:function(node){var attributeId,attributes,classes,dynamic,id;dynamic=this.dynamic;id=node.id,classes=node.classes,attributes=node.attributes;classes=(classes||[]).map(JSON.stringify);attributeId=void 0;if(attributes){attributes=attributes.filter(function(_arg){var name,value;name=_arg.name,value=_arg.value;if(name==="class"){classes.push(value);return false}else if(name==="id"){attributeId=value;return false}else{return true}})}else{attributes=[]}if(classes.length){attributes.unshift({name:"class",value:this.stringJoin(classes)})}if(attributeId){attributes.unshift({name:"id",value:attributeId})}else if(id){attributes.unshift({name:"id",value:JSON.stringify(id)})}return attributes},render:function(node){var filter,tag,text;tag=node.tag,filter=node.filter,text=node.text;if(tag){return this.tag(node)}else if(filter){return this.filter(node)}else{return this.contents(node)}},replaceKeywords:function(codeString){return codeString.replace(keywordsRegex,"__$1 ")},filter:function(node){var filter,filterName;filterName=node.filter;if(filter=this.filters[filterName]){return[].concat.apply([],this.filters[filterName](node.content,this))}else{return["__filter("+JSON.stringify(filterName)+", "+JSON.stringify(node.content)+")"]}},contents:function(node){var bufferedCode,childContent,children,code,contents,indent,text,unbufferedCode;children=node.children,bufferedCode=node.bufferedCode,unbufferedCode=node.unbufferedCode,text=node.text;if(unbufferedCode){indent=true;code=this.replaceKeywords(unbufferedCode);contents=[code]}else if(bufferedCode){contents=this.buffer(bufferedCode)}else if(text){contents=this.buffer(JSON.stringify(text))}else if(node.tag){contents=[]}else if(node.comment){return[]}else{contents=[];console.warn("No content for node:",node)}if(children){childContent=this.renderNodes(children);if(indent){childContent=this.indent(childContent.join("\n"))}contents=contents.concat(childContent)}return contents},renderNodes:function(nodes){return[].concat.apply([],nodes.map(this.render,this))},tag:function(node){var attributes,contents,tag;tag=node.tag;attributes=this.attributes(node);contents=this.contents(node);return this.element(tag,attributes,contents)}};exports.util=util;exports.compile=function(parseTree,_arg){var compiler,error,exports,items,name,options,program,programSource,source,_ref;_ref=_arg!=null?_arg:{},name=_ref.name,exports=_ref.exports,compiler=_ref.compiler;if(compiler){CoffeeScript=compiler}items=util.renderNodes(parseTree);source="(data) ->\n  (->\n    {\n      __push\n      __pop\n      __attribute\n      __filter\n      __text\n      __on\n      __each\n      __with\n      __render\n    } = HAMLjr.Runtime(this)\n\n    __push document.createDocumentFragment()\n"+util.indent(items.join("\n"),"    ")+"\n    __pop()\n  ).call(data)";options={bare:true};if(name){programSource="@HAMLjr ||= {}\n@HAMLjr.templates ||= {}\n@HAMLjr.templates["+JSON.stringify(name)+"] = "+source}else if(exports){programSource="module.exports = "+source}else{programSource=source}try{program=CoffeeScript.compile(programSource,options);return program}catch(_error){error=_error;process.stderr.write("COMPILE ERROR:\n  SOURCE:\n "+programSource+"\n");throw error}}}.call(this);
 },{"__browserify_process":16,"coffee-script":10}],18:[function(require,module,exports){
 !function(){var Runtime,compile,extend,lexer,oldParse,parser,util,_ref,__slice=[].slice;_ref=require("./compiler"),compile=_ref.compile,util=_ref.util;lexer=require("./lexer").lexer;parser=require("./parser").parser;Runtime=require("./runtime").Runtime;extend=function(){var name,source,sources,target,_i,_len;target=arguments[0],sources=2<=arguments.length?__slice.call(arguments,1):[];for(_i=0,_len=sources.length;_i<_len;_i++){source=sources[_i];for(name in source){target[name]=source[name]}}return target};oldParse=parser.parse;extend(parser,{lexer:lexer,parse:function(input){extend(parser.yy,{indent:0,nodePath:[{children:[]}],filterIndent:void 0});return oldParse.call(parser,input)}});extend(parser.yy,{extend:extend,newline:function(){var lastNode;lastNode=this.nodePath[this.nodePath.length-1];if(lastNode.filter){return this.appendFilterContent(lastNode,"")}},append:function(node,indentation){var index,lastNode,parent;if(indentation==null){indentation=0}if(node.filterLine){lastNode=this.nodePath[this.nodePath.length-1];this.appendFilterContent(lastNode,node.filterLine);return}parent=this.nodePath[indentation];this.appendChild(parent,node);index=indentation+1;this.nodePath[index]=node;this.nodePath.length=index+1;return node},appendChild:function(parent,child){if(!child.filter){this.filterIndent=void 0;this.lexer.popState()}parent.children||(parent.children=[]);return parent.children.push(child)},appendFilterContent:function(filter,content){filter.content||(filter.content="");return filter.content+=""+content+"\n"}});extend(exports,{compile:compile,parser:parser,Runtime:Runtime,util:util})}.call(this);
 },{"./compiler":17,"./lexer":19,"./parser":20,"./runtime":21}],19:[function(require,module,exports){
@@ -6848,19 +6844,6 @@ var path = require('path');
 var stripQuotes = utils.stripQuotes;
 
 /**
- * Vendor crap.
- */
-
-var query = [
-  '(min--moz-device-pixel-ratio: 1.5)',
-  '(-o-min-device-pixel-ratio: 3/2)',
-  '(-webkit-min-device-pixel-ratio: 1.5)',
-  '(min-device-pixel-ratio: 1.5)',
-  '(min-resolution: 144dpi)',
-  '(min-resolution: 1.5dppx)'
-].join(', ');
-
-/**
  * Translate
  *
  *   .logo {
@@ -6908,7 +6891,7 @@ module.exports = function(vendors) {
         // wrap in @media
         style.rules.push({
           type: 'media',
-          media: query,
+          media: 'all and (-webkit-min-device-pixel-ratio: 1.5)',
           rules: [
             {
               type: 'rule',
@@ -8294,7 +8277,7 @@ module.exports = function(css, options){
     var pos = position();
 
     // prop
-    var prop = match(/^(\*?[-\/\*\w]+)\s*/);
+    var prop = match(/^(\*?[-\w]+)\s*/);
     if (!prop) return;
     prop = prop[0];
 
@@ -8378,12 +8361,13 @@ module.exports = function(css, options){
     var name = m[1];
 
     if (!open()) return error("@keyframes missing '{'");
+    comments();
 
     var frame;
-    var frames = comments();
+    var frames = [];
     while (frame = keyframe()) {
       frames.push(frame);
-      frames = frames.concat(comments());
+      comments();
     }
 
     if (!close()) return error("@keyframes missing '}'");
@@ -8408,8 +8392,9 @@ module.exports = function(css, options){
     var supports = m[1].trim();
 
     if (!open()) return error("@supports missing '{'");
+    comments();
 
-    var style = comments().concat(rules());
+    var style = rules();
 
     if (!close()) return error("@supports missing '}'");
 
@@ -8432,8 +8417,9 @@ module.exports = function(css, options){
     var media = m[1].trim();
 
     if (!open()) return error("@media missing '{'");
+    comments();
 
-    var style = comments().concat(rules());
+    var style = rules();
 
     if (!close()) return error("@media missing '}'");
 
@@ -8454,15 +8440,16 @@ module.exports = function(css, options){
     if (!m) return;
 
     var sel = selector() || [];
+    var decls = [];
 
     if (!open()) return error("@page missing '{'");
-    var decls = comments();
+    comments();
 
     // declarations
     var decl;
     while (decl = declaration()) {
       decls.push(decl);
-      decls = decls.concat(comments());
+      comments();
     }
 
     if (!close()) return error("@page missing '}'");
@@ -8487,8 +8474,9 @@ module.exports = function(css, options){
     var doc = m[2].trim();
 
     if (!open()) return error("@document missing '{'");
+    comments();
 
-    var style = comments().concat(rules());
+    var style = rules();
 
     if (!close()) return error("@document missing '}'");
 
