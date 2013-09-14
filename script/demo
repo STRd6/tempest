@@ -8,7 +8,6 @@ rm -r $BUILD/*
 set -e
 mkdir -p $BUILD/javascripts
 
-cp -r lib $BUILD/javascripts/
 cp dist/*.js $BUILD/javascripts
 
 node_modules/.bin/coffee -co $BUILD/javascripts demo/*.coffee
