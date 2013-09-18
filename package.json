@@ -1,6 +1,6 @@
 {
   "name": "tempest-js",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Templating that doesn't blow.",
   "devDependencies": {
     "coffee-script": "~1.6.3",
@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "athletic-support": "~0.1.6",
-    "haml-jr": "~0.4.0",
+    "haml-jr": "~0.4.1",
     "marked": "~0.2.9"
   },
   "repository": {
