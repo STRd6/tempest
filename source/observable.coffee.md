@@ -1,7 +1,11 @@
 Observable
 ==========
 
-Observable constructor.
+`Observable` allows for observing arrays, functions, and objects.
+
+Function dependencies are automagically observed.
+
+Standard array methods are proxied through to the underlying array.
 
     Observable = (value) ->
 
@@ -9,84 +13,107 @@ Return the object if it is already an observable object.
 
       return value if typeof value?.observe is "function"
 
-Maintain a set of listeners to observe changes.
+Maintain a set of listeners to observe changes and provide a helper to notify each observer.
 
       listeners = []
-
-Helper to notify each observer of changes.
 
       notify = (newValue) ->
         listeners.forEach (listener) ->
           listener(newValue)
 
-Our observable function, stored as a reference to self.
+Our observable function is stored as a reference to `self`.
 
-      self = (newValue) ->
+If `value` is a function compute dependencies and listen to observables that it depends on.
+
+      if typeof value is 'function'
+        fn = value
+        self = ->
+          # Automagic dependency observation
+          if base
+            self.observe base
+
+          return value
+
+        self.observe = (listener) ->
+          listeners.push listener
+
+        changed = ->
+          value = fn()
+          notify(value)
+
+        value = computeDependencies(fn, changed)
+
+      else
 
 When called with zero arguments it is treated as a getter. When called with one argument it is treated as a setter.
 
-        if arguments.length > 0
-
 Changes to the value will trigger notifications.
-
-          if value != newValue
-            value = newValue
-
-            notify(newValue)
 
 The value is always returned.
 
-        return value
+        self = (newValue) ->
+          if arguments.length > 0
+            if value != newValue
+              value = newValue
 
-TODO: If value is a function compute dependencies and listen to observables that it depends on
+              notify(newValue)
+          else
+            # Automagic dependency observation
+            if base
+              self.observe base
 
-Methods that all observables share.
-
-      extend self,
+          return value
 
 Add a listener for when this object changes.
 
-        observe: (listener) ->
+        self.observe = (listener) ->
           listeners.push listener
 
 This `each` iterator is similar to [the Maybe monad](http://en.wikipedia.org/wiki/Monad_&#40;functional_programming&#41;#The_Maybe_monad) in that our observable may contain a single value or nothing at all.
 
-        each: (args...) ->
-          if value?
-            [value].forEach(args...)
+      self.each = (args...) ->
+        if value?
+          [value].forEach(args...)
 
-TODO: Add a delayed/debounced proxy
-
-If value is array hook into array modification events to keep things up to date.
+If the value is an array then proxy array methods and add notifications to mutation events.
 
       if Array.isArray(value)
-        Object.extend self,
-          each: (args...) ->
-            value.forEach(args...)
+        [
+          "concat"
+          "every"
+          "filter"
+          "forEach"
+          "indexOf"
+          "join"
+          "lastIndexOf"
+          "map"
+          "reduce"
+          "reduceRight"
+          "slice"
+          "some"
+        ].forEach (method) ->
+          self[method] = (args...) ->
+            value[method](args...)
 
-          map: (args...) ->
-            value.map(args...)
-
-          remove: (item) ->
-            ret = value.remove(item)
-
+        [
+          "pop"
+          "push"
+          "reverse"
+          "shift"
+          "splice"
+          "sort"
+          "unshift"
+        ].forEach (method) ->
+          self[method] = (args...) ->
+            ret = value[method](args...)
             notify(value)
 
             return ret
 
-          push: (item) ->
-            ret = value.push(item)
+        self.each = (args...) ->
+          self.forEach(args...)
 
-            notify(value)
-
-            return ret
-
-          pop: ->
-            ret = value.pop()
-
-            notify(value)
-
-            return ret
+          return self
 
       return self
 
@@ -105,3 +132,12 @@ The extend method adds one objects properties to another.
           target[name] = source[name]
 
       return target
+
+    base = undefined
+
+    computeDependencies = (fn, root) ->
+      base = root
+      value = fn()
+      base = undefined
+
+      return value
