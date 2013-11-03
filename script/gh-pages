@@ -3,5 +3,5 @@ set -e
 
 cd gh-pages
 git add .
-git ci -am "Pages build"
+git ci -m "Pages build"
 git push
