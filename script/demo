@@ -1,4 +1,8 @@
 #!/bin/bash
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+VERSION=`$DIR/version`
+
 set +e
 
 BUILD=gh-pages
@@ -12,7 +16,7 @@ cp dist/*.js $BUILD/javascripts
 
 node_modules/.bin/coffee -co $BUILD/javascripts demo/*.coffee
 
-node_modules/.bin/browserify $BUILD/javascripts/env.js -i coffee-script > $BUILD/javascripts/envweb.js
+node_modules/.bin/browserify $BUILD/javascripts/env.js -i coffee-script > $BUILD/javascripts/envweb-v$VERSION.js
 node_modules/.bin/browserify $BUILD/javascripts/loader.js -i coffee-script > $BUILD/javascripts/loaderweb.js
 
 node_modules/.bin/haml-jr -H < demo/index.haml > $BUILD/index.html
