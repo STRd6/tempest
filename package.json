@@ -1,6 +1,6 @@
 {
   "name": "tempest-js",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Templating that doesn't blow.",
   "devDependencies": {
     "coffee-script": "~1.6.3",

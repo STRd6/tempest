@@ -10,9 +10,6 @@ describe 'Observable', ->
 
     assert.equal(observable(), n)
 
-  it 'should have an observe method', ->
-    assert Observable().observe
-
   it 'should fire events when setting', ->
     string = "yolo"
 
@@ -47,6 +44,24 @@ describe 'Observable', ->
 
       assert.equal called, 0
 
+  it "should allow for stopping observation", ->
+    observable = Observable("string")
+
+    called = 0
+    fn = (newValue) ->
+      called += 1
+      assert.equal newValue, "4life"
+
+    observable.observe fn
+
+    observable("4life")
+
+    observable.stopObserving fn
+
+    observable("wat")
+
+    assert.equal called, 1
+
 describe "Observable Array", ->
   it "should proxy array methods", ->
     o = Observable [5]
@@ -68,6 +83,32 @@ describe "Observable Array", ->
     o = Observable []
 
     assert o.each
+
+  it "#get", ->
+    o = Observable [0, 1, 2, 3]
+
+    assert.equal o.get(2), 2
+
+  it "#first", ->
+    o = Observable [0, 1, 2, 3]
+
+    assert.equal o.first(), 0
+
+  it "#last", ->
+    o = Observable [0, 1, 2, 3]
+
+    assert.equal o.last(), 3
+
+  it "#remove", (done) ->
+    o = Observable [0, 1, 2, 3]
+
+    o.observe (newValue) ->
+      assert.equal newValue.length, 3
+      setTimeout ->
+        done()
+      , 0
+
+    assert.equal o.remove(2), 2
 
   # TODO: This looks like it might be impossible
   it "should proxy the length property"

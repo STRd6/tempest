@@ -105,15 +105,40 @@ If the value is an array then proxy array methods and add notifications to mutat
           "unshift"
         ].forEach (method) ->
           self[method] = (args...) ->
-            ret = value[method](args...)
-            notify(value)
+            notifyReturning value[method](args...)
 
-            return ret
+        notifyReturning = (returnValue) ->
+          notify(value)
 
-        self.each = (args...) ->
-          self.forEach(args...)
+          return returnValue
 
-          return self
+Add some extra helpful methods to array observables.
+
+        extend self,
+          each: (args...) ->
+            self.forEach(args...)
+
+            return self
+
+Remove an element from the array and notify observers of changes.
+
+          remove: (object) ->
+            index = value.indexOf(object)
+
+            if index >= 0
+              notifyReturning value.splice(index, 1)[0]
+
+          get: (index) ->
+            value[index]
+
+          first: ->
+            value[0]
+
+          last: ->
+            value[value.length-1]
+
+      self.stopObserving = (fn) ->
+        remove listeners, fn
 
       return self
 
@@ -135,9 +160,19 @@ The extend method adds one objects properties to another.
 
     base = undefined
 
+Automagically compute dependencies.
+
     computeDependencies = (fn, root) ->
       base = root
       value = fn()
       base = undefined
 
       return value
+
+Remove a value from an array.
+
+    remove = (array, value) ->
+      index = array.indexOf(value)
+
+      if index >= 0
+        array.splice(index, 1)[0]
